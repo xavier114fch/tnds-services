@@ -34,7 +34,7 @@ jobs:
           ref: gh-pages
           path: uk-bus-open-data
       
-      - name: Copy TNDS services data only
+      - name: Leave TNDS services data only
         run: |
           cd uk-bus-open-data/data
           rm -rf bods/
@@ -44,7 +44,6 @@ jobs:
           rm -rf tnds/stopPoints/
           rm -f tnds/all_stop_points.json
           rm -f tnds/stops_tnds_only.json
-          ls -lah
 
       - name: Archive artifact
         run: |
