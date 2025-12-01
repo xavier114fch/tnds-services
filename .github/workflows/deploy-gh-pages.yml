@@ -36,7 +36,7 @@ jobs:
       
       - name: Copy TNDS services data only
         run: |
-          mkdir -p services
+          cd uk-bus-open-data
           rm -rf bods/
           rm -rf naptan/
           rm -rf noc/
@@ -44,12 +44,11 @@ jobs:
           rm -rf tnds/stopPoints/
           rm -f tnds/all_stop_points.json
           rm -f tnds/stops_tnds_only.json
-          cp -r uk-bus-open-data/data/tnds/ services/
 
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v4
         with:
-          path: services
+          path: uk-bus-open-data/tnds
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
