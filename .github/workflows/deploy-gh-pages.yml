@@ -44,7 +44,6 @@ jobs:
           rm -rf tnds/stopPoints/
           rm -f tnds/all_stop_points.json
           rm -f tnds/stops_tnds_only.json
-          cd ..
           ls -lah
 
       - name: Upload artifact for GitHub Pages
