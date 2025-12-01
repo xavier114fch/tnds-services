@@ -26,7 +26,9 @@ jobs:
       - name: Copy TNDS services data only
         run: |
           mkdir -p services
-          rsync -av --exclude='stopPoints' uk-bus-open-data/data/tnds/ services/
+          cp -r uk-bus-open-data/data/tnds/ services/
+          cd services
+          rm -rf stopPoints
 
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v4
