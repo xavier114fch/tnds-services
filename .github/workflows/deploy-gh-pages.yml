@@ -46,10 +46,25 @@ jobs:
           rm -f tnds/stops_tnds_only.json
           ls -lah
 
-      - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v4
+      - name: Archive artifact
+        run: |
+          mkdir -p artifact
+          tar \
+            --dereference --hard-dereference \
+            -czf artifact/artifact.tar.gz \
+            --exclude=artifact \
+            --exclude=.git \
+            --exclude=.github \
+            --exclude=".[^/]*" \
+            uk-bus-open-data/data/tnds
+
+      - name: Upload Artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@v5
         with:
-          path: uk-bus-open-data/data/tnds
+          name: 'github-pages'
+          path: artifact/
+          if-no-files-found: error
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
