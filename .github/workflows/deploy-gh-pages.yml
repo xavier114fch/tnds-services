@@ -47,6 +47,7 @@ jobs:
 
       - name: Archive artifact
         run: |
+          cd uk-bus-open-data/data/tnds
           mkdir -p artifact
           tar \
             --dereference --hard-dereference \
@@ -55,14 +56,14 @@ jobs:
             --exclude=.git \
             --exclude=.github \
             --exclude=".[^/]*" \
-            uk-bus-open-data/data/tnds
+            .
 
       - name: Upload Artifact
         id: upload-artifact
         uses: actions/upload-artifact@v5
         with:
           name: 'github-pages'
-          path: artifact/
+          path: uk-bus-open-data/data/tnds/artifact/
           if-no-files-found: error
 
       - name: Deploy to GitHub Pages
