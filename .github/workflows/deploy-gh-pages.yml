@@ -37,34 +37,18 @@ jobs:
       - name: Leave TNDS services data only
         run: |
           cd uk-bus-open-data/data
-          rm -rf bods/
-          rm -rf naptan/
-          rm -rf noc/
-          rm -rf nptg/
-          rm -rf tnds/stopPoints/
+          rm -rf bods
+          rm -rf naptan
+          rm -rf noc
+          rm -rf nptg
+          rm -rf tnds/stopPoints
           rm -f tnds/all_stop_points.json
           rm -f tnds/stops_tnds_only.json
 
-      - name: Archive artifact
-        run: |
-          cd uk-bus-open-data/data/tnds
-          mkdir -p artifact
-          tar \
-            --dereference --hard-dereference \
-            -czf artifact/artifact.tar.gz \
-            --exclude=artifact \
-            --exclude=.git \
-            --exclude=.github \
-            --exclude=".[^/]*" \
-            .
-
-      - name: Upload Artifact
-        id: upload-artifact
-        uses: actions/upload-artifact@v5
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: 'github-pages'
-          path: uk-bus-open-data/data/tnds/artifact/
-          if-no-files-found: error
+          path: uk-bus-open-data/data/tnds
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
