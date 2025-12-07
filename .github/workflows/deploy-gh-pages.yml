@@ -53,7 +53,6 @@ jobs:
 
       - name: Archive artifact
         run: |
-          cd uk-bus-open-data/data/tnds
           mkdir -p artifact
           tar \
             --dereference --hard-dereference \
@@ -62,7 +61,8 @@ jobs:
             --exclude=.git \
             --exclude=.github \
             --exclude=".[^/]*" \
-            .
+            uk-bus-open-data/data/tnds/
+          rm -rf uk-bus-open-data
 
           find . -type d | while read dir; do
             count=$(find "$dir" -maxdepth 1 -type f | wc -l)
