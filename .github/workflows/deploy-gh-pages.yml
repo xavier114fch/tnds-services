@@ -75,7 +75,7 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: 'github-pages'
-          path: uk-bus-open-data/data/tnds/artifact/
+          path: artifact
           if-no-files-found: error
 
       - name: Deploy to GitHub Pages
