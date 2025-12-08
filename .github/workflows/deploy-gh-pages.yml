@@ -80,3 +80,6 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
+        with:
+          error_count: '100'
+          reporting_interval: '1000'
