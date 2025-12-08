@@ -38,7 +38,7 @@ jobs:
       - name: Leave TNDS services data only
         run: |
           mkdir -p services
-          cp -r uk-bus-open-data/data/tnds/ services/
+          cp -r uk-bus-open-data/data/tnds/S/* services/
           rm -rf services/stopPoints
           rm -f services/stops_tnds_only.json
           rm -f services/all_stop_points.json
