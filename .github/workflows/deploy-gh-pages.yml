@@ -43,11 +43,9 @@ jobs:
           rm -rf noc
           rm -rf nptg
           rm -rf tnds/stopPoints
+          rm -rf tnds/SE
           rm -f tnds/all_stop_points.json
           rm -f tnds/stops_tnds_only.json
-
-          ＃ Delete SE to test out deployment
-          rm -rf tnds/SE
 
           find . -type d | while read dir; do
             count=$(find "$dir" -maxdepth 1 -type f | wc -l)
