@@ -37,8 +37,11 @@ jobs:
       
       - name: Leave TNDS services data only
         run: |
-          mkdir -p SE
-          cp -r uk-bus-open-data/data/tnds/SE/* SE/
+          mkdir -p services
+          cp -r uk-bus-open-data/data/tnds/ services/
+          rm -rf services/stopPoints
+          rm -f services/stops_tnds_only.json
+          rm -f services/all_stop_points.json
           rm -rf uk-bus-open-data
 
           find . -type d | while read dir; do
@@ -50,7 +53,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: SE
+          path: services
           
       # - name: Delete old github-pages artifacts
       #   env:
