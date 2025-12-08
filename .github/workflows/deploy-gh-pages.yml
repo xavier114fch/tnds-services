@@ -37,7 +37,7 @@ jobs:
       
       - name: Leave TNDS services data only
         run: |
-          mkdir -P SE
+          mkdir -p SE
           cp -r uk-bus-open-data/data/tnds/SE/* SE/
           rm -rf uk-bus-open-data
 
