@@ -45,6 +45,8 @@ jobs:
           rm -rf tnds/stopPoints
           rm -rf tnds/N*
           rm -rf tnds/S*
+          rm -rf tnds/E*
+          rm -rf tnds/W*
           rm -f tnds/all_stop_points.json
           rm -f tnds/stops_tnds_only.json
 
