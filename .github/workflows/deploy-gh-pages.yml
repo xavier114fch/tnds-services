@@ -52,7 +52,7 @@ jobs:
           done
 
       - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: uk-bus-open-data/data/tnds
 
