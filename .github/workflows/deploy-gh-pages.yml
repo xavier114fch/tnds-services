@@ -13,6 +13,8 @@ permissions:
 
 jobs:
   deploy:
+    env:
+      ACTIONS_STEP_DEBUG: true
     runs-on: ubuntu-latest
 
     steps:
