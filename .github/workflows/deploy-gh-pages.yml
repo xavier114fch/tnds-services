@@ -50,7 +50,7 @@ jobs:
             printf "%-50s Files: %-6s Size: %s\n" "$dir" "$count" "$size"
           done
 
-      - name: Create artiface
+      - name: Create artifact
         run: |
           mkdir -p artifact
           tar \
@@ -72,8 +72,8 @@ jobs:
           rm -rf /home/runner/.rustup
           rm -rf /home/runner/.nvm
           rm -rf /home/runner/actions-runner/cached/2.329.0/
-          rm -rf /home/runner/actions-runner/cached/externals/node20_alpine/
-          rm -rf /home/runner/actions-runner/cached/externals/node20/
+          # rm -rf /home/runner/actions-runner/cached/externals/node20_alpine/
+          # rm -rf /home/runner/actions-runner/cached/externals/node20/
           # rm -rf /home/runner/actions-runner/cached/externals/node24_alpine/
           # rm -rf /home/runner/actions-runner/cached/externals/node24/
 
