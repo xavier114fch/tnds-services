@@ -64,6 +64,7 @@ jobs:
           rm -rf /home/runner/.cargo
           rm -rf /home/runner/.rustup
           rm -rf /home/runner/.nvm
+          rm -rf /home/runner/actions-runner/cached/2.329.0/
 
       - name: Check runner storage space
         run: | 
