@@ -67,6 +67,8 @@ jobs:
           rm -rf /home/runner/actions-runner/cached/2.329.0/
           rm -rf /home/runner/actions-runner/cached/externals/node20_alpine/
           rm -rf /home/runner/actions-runner/cached/externals/node20/
+          rm -rf /home/runner/actions-runner/cached/externals/node24_alpine/
+          rm -rf /home/runner/actions-runner/cached/externals/node24/
 
       - name: Check runner storage space
         run: | 
