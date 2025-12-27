@@ -50,6 +50,21 @@ jobs:
             printf "%-50s Files: %-6s Size: %s\n" "$dir" "$count" "$size"
           done
 
+      - name: Create artiface
+        run: |
+          mkdir -p artifact
+          tar \
+            --dereference --hard-dereference \
+            -czf artifact/artifact.tar.gz \
+            --exclude=artifact \
+            --exclude=.git \
+            --exclude=.github \
+            --exclude=".[^/]*" \
+            services/
+
+          echo "Tarball size: "
+          ls -lh artifact/artifact.tar.gz
+
       - name: Delete 
         run: | 
           rm -rf /home/runner/.dotnet
@@ -57,8 +72,8 @@ jobs:
           rm -rf /home/runner/.rustup
           rm -rf /home/runner/.nvm
           rm -rf /home/runner/actions-runner/cached/2.329.0/
-          rm -rf /home/runner/actions-runner/cached/externals/node20_alpine/
-          rm -rf /home/runner/actions-runner/cached/externals/node20/
+          # rm -rf /home/runner/actions-runner/cached/externals/node20_alpine/
+          # rm -rf /home/runner/actions-runner/cached/externals/node20/
           rm -rf /home/runner/actions-runner/cached/externals/node24_alpine/
           rm -rf /home/runner/actions-runner/cached/externals/node24/
 
@@ -91,13 +106,13 @@ jobs:
       #             repos/${{ github.repository }}/actions/artifacts/$id
       #         done
 
-      # - name: Upload Artifact
-      #   id: upload-artifact
-      #   uses: actions/upload-artifact@v5
-      #   with:
-      #     name: 'github-pages'
-      #     path: artifact
-      #     if-no-files-found: error
+      - name: Upload Artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: 'github-pages'
+          path: artifact
+          if-no-files-found: error
 
-      # - name: Deploy to GitHub Pages
-      #   uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
