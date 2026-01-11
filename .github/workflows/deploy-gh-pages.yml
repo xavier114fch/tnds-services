@@ -12,9 +12,7 @@ permissions:
   actions: write
 
 jobs:
-  deploy:
-    env:
-      ACTIONS_STEP_DEBUG: true
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -52,43 +50,43 @@ jobs:
             printf "%-50s Files: %-6s Size: %s\n" "$dir" "$count" "$size"
           done
 
-      # - name: Create artifact
-      #   run: |
-      #     mkdir -p artifact
-      #     tar \
-      #       --dereference --hard-dereference \
-      #       -czf artifact/artifact.tar.gz \
-      #       --exclude=artifact \
-      #       --exclude=.git \
-      #       --exclude=.github \
-      #       --exclude=".[^/]*" \
-      #       services/
+      - name: Create artifact
+        run: |
+          mkdir -p artifact
+          tar \
+            --dereference --hard-dereference \
+            -czf artifact/artifact.tar.gz \
+            --exclude=artifact \
+            --exclude=.git \
+            --exclude=.github \
+            --exclude=".[^/]*" \
+            services/
 
-      #     echo "Tarball size: "
-      #     ls -lh artifact/artifact.tar.gz
+          echo "Tarball size: "
+          ls -lh artifact/artifact.tar.gz
 
-      - name: Delete 
-        run: | 
-          rm -rf /home/runner/.dotnet
-          rm -rf /home/runner/.cargo
-          rm -rf /home/runner/.rustup
-          rm -rf /home/runner/.nvm
-          rm -rf /home/runner/actions-runner/cached/2.329.0/
-          # rm -rf /home/runner/actions-runner/cached/externals/node20_alpine/
-          # rm -rf /home/runner/actions-runner/cached/externals/node20/
-          # rm -rf /home/runner/actions-runner/cached/externals/node24_alpine/
-          # rm -rf /home/runner/actions-runner/cached/externals/node24/
+      # - name: Delete 
+      #   run: | 
+      #     rm -rf /home/runner/.dotnet
+      #     rm -rf /home/runner/.cargo
+      #     rm -rf /home/runner/.rustup
+      #     rm -rf /home/runner/.nvm
+      #     rm -rf /home/runner/actions-runner/cached/2.329.0/
+      #     # rm -rf /home/runner/actions-runner/cached/externals/node20_alpine/
+      #     # rm -rf /home/runner/actions-runner/cached/externals/node20/
+      #     # rm -rf /home/runner/actions-runner/cached/externals/node24_alpine/
+      #     # rm -rf /home/runner/actions-runner/cached/externals/node24/
 
-      - name: Check runner storage space
-        run: | 
-          cd /home/runner/actions-runner/cached/bin
-          ls -lah
+      # - name: Check runner storage space
+      #   run: | 
+      #     cd /home/runner/actions-runner/cached/bin
+      #     ls -lah
           
-          find /home/runner/actions-runner/cached/bin -type d | while read dir; do
-            count=$(find "$dir" -maxdepth 1 -type f | wc -l)
-            size=$(du -sh "$dir" | awk '{print $1}')
-            printf "%-50s Files: %-6s Size: %s\n" "$dir" "$count" "$size"
-          done
+      #     find /home/runner/actions-runner/cached/bin -type d | while read dir; do
+      #       count=$(find "$dir" -maxdepth 1 -type f | wc -l)
+      #       size=$(du -sh "$dir" | awk '{print $1}')
+      #       printf "%-50s Files: %-6s Size: %s\n" "$dir" "$count" "$size"
+      #     done
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
@@ -108,13 +106,23 @@ jobs:
       #             repos/${{ github.repository }}/actions/artifacts/$id
       #         done
 
-      # - name: Upload Artifact
-      #   id: upload-artifact
-      #   uses: actions/upload-artifact@v5
-      #   with:
-      #     name: 'github-pages'
-      #     path: artifact
-      #     if-no-files-found: error
-
-      # - name: Deploy to GitHub Pages
-      #   uses: actions/deploy-pages@v4
+      - name: Upload Artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: 'github-pages'
+          path: artifact
+          if-no-files-found: error
+          
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: 'github-pages'
+          path: artifact/
+          
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
