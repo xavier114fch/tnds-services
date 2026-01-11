@@ -12,14 +12,13 @@ permissions:
   actions: write
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Maximise build space
         uses: easimon/maximize-build-space@master
         with:
-          build-mount-path: /mnt
           root-reserve-mb: 512
           swap-size-mb: 1024
           remove-dotnet: 'true'
@@ -89,16 +88,16 @@ jobs:
             printf "%-50s Files: %-6s Size: %s\n" "$dir" "$count" "$size"
           done
 
-      # - name: Upload Pages artifact
-      #   uses: actions/upload-pages-artifact@v4
-      #   with:
-      #     path: services
-
       - name: Upload Pages artifact
-        uses: peaceiris/actions-gh-pages@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./services
+          path: services
+
+      # - name: Upload Pages artifact
+      #   uses: peaceiris/actions-gh-pages@v4
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./services
           
       # - name: Delete old github-pages artifacts
       #   env:
