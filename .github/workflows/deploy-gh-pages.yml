@@ -90,10 +90,10 @@ jobs:
       #       printf "%-50s Files: %-6s Size: %s\n" "$dir" "$count" "$size"
       #     done
 
-      # - name: Upload Pages artifact
-      #   uses: actions/upload-pages-artifact@v4
-      #   with:
-      #     path: services
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: services
           
       # - name: Delete old github-pages artifacts
       #   env:
@@ -108,13 +108,13 @@ jobs:
       #             repos/${{ github.repository }}/actions/artifacts/$id
       #         done
 
-      - name: Upload Artifact
-        id: upload-artifact
-        uses: actions/upload-artifact@v5
-        with:
-          name: 'github-pages'
-          path: artifact
-          if-no-files-found: error
+      # - name: Upload Artifact
+      #   id: upload-artifact
+      #   uses: actions/upload-artifact@v5
+      #   with:
+      #     name: 'github-pages'
+      #     path: artifact
+      #     if-no-files-found: error
 
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+      # - name: Deploy to GitHub Pages
+      #   uses: actions/deploy-pages@v4
