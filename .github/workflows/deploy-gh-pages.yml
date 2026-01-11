@@ -12,7 +12,7 @@ permissions:
   actions: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -50,20 +50,20 @@ jobs:
             printf "%-50s Files: %-6s Size: %s\n" "$dir" "$count" "$size"
           done
 
-      - name: Create artifact
-        run: |
-          mkdir -p artifact
-          tar \
-            --dereference --hard-dereference \
-            -czf artifact/artifact.tar.gz \
-            --exclude=artifact \
-            --exclude=.git \
-            --exclude=.github \
-            --exclude=".[^/]*" \
-            services/
+      # - name: Create artifact
+      #   run: |
+      #     mkdir -p artifact
+      #     tar \
+      #       --dereference --hard-dereference \
+      #       -czf artifact/artifact.tar.gz \
+      #       --exclude=artifact \
+      #       --exclude=.git \
+      #       --exclude=.github \
+      #       --exclude=".[^/]*" \
+      #       services/
 
-          echo "Tarball size: "
-          ls -lh artifact/artifact.tar.gz
+      #     echo "Tarball size: "
+      #     ls -lh artifact/artifact.tar.gz
 
       # - name: Delete 
       #   run: | 
@@ -92,6 +92,12 @@ jobs:
       #   uses: actions/upload-pages-artifact@v4
       #   with:
       #     path: services
+
+      - name: Upload Pages artifact
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./services
           
       # - name: Delete old github-pages artifacts
       #   env:
@@ -106,23 +112,23 @@ jobs:
       #             repos/${{ github.repository }}/actions/artifacts/$id
       #         done
 
-      - name: Upload Artifact
-        id: upload-artifact
-        uses: actions/upload-artifact@v5
-        with:
-          name: 'github-pages'
-          path: artifact
-          if-no-files-found: error
+      # - name: Upload Artifact
+      #   id: upload-artifact
+      #   uses: actions/upload-artifact@v5
+      #   with:
+      #     name: 'github-pages'
+      #     path: artifact
+      #     if-no-files-found: error
           
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v7
-        with:
-          name: 'github-pages'
-          path: artifact/
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     - name: Download Artifact
+  #       uses: actions/download-artifact@v7
+  #       with:
+  #         name: 'github-pages'
+  #         path: artifact/
           
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+  #     - name: Deploy to GitHub Pages
+  #       uses: actions/deploy-pages@v4
